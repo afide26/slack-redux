@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
-import Login from "../Auth/Login";
-import Register from "../Auth/Register";
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 
 class App extends Component {
   render() {
