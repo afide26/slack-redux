@@ -16,10 +16,16 @@ class Channels extends Component {
     firstLoad: true
   };
 
+  /*Component Lifecycle functions/methods */
   componentDidMount() {
     this.addListeners();
   }
 
+  componentWillUnmount() {
+    this.removeListeners();
+  }
+
+  /*Listeners functions/methods */
   addListeners = () => {
     let loadedChannels = [];
     this.state.channelsRef.on("child_added", snap => {
@@ -34,6 +40,11 @@ class Channels extends Component {
     });
   };
 
+  removeListeners = () => {
+    this.state.channelsRef.off();
+  };
+
+  /*Channel Functions*/
   setFirstChannel = () => {
     const firstChannel = this.state.channels[0];
     if (this.state.firstLoad && this.state.channels.length > 0) {
@@ -47,6 +58,30 @@ class Channels extends Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  addChannel = () => {
+    const { channelsRef, channelName, channelDetails, user } = this.state;
+    const key = channelsRef.push().key;
+
+    const newChannel = {
+      id: key,
+      name: channelName,
+      details: channelDetails,
+      createdBy: {
+        name: user.displayName,
+        avatar: user.photoURL
+      }
+    };
+    channelsRef
+      .child(key)
+      .update(newChannel)
+      .then(() => {
+        this.setState({ channelName: "", channelDetails: "" });
+        this.closeModal();
+        console.log("Channel added to firebase");
+      })
+      .catch(err => console.error(err));
   };
 
   setActiveChannel = channel => {
@@ -72,6 +107,7 @@ class Channels extends Component {
       </Menu.Item>
     ));
 
+  /*Form functions/methods */
   handleSubmit = event => {
     event.preventDefault();
     if (this.isFormValid(this.state)) {
@@ -82,30 +118,6 @@ class Channels extends Component {
 
   isFormValid = ({ channelName, channelDetails }) =>
     channelName && channelDetails;
-
-  addChannel = () => {
-    const { channelsRef, channelName, channelDetails, user } = this.state;
-    const key = channelsRef.push().key;
-
-    const newChannel = {
-      id: key,
-      name: channelName,
-      details: channelDetails,
-      createdBy: {
-        name: user.displayName,
-        avatar: user.photoURL
-      }
-    };
-    channelsRef
-      .child(key)
-      .update(newChannel)
-      .then(() => {
-        this.setState({ channelName: "", channelDetails: "" });
-        this.closeModal();
-        console.log("Channel added to firebase");
-      })
-      .catch(err => console.error(err));
-  };
 
   render() {
     const { channels, modal } = this.state;
