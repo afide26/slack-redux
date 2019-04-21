@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Header, Icon, Dropdown } from "semantic-ui-react";
+import { Grid, Header, Icon, Dropdown, Image } from "semantic-ui-react";
 import firebase from "../../firebase";
 import { connect } from "react-redux";
 
@@ -32,11 +32,6 @@ class UserPanel extends Component {
   ];
   render() {
     const { displayName, photoURL } = this.state.user;
-    const imageStyle = {
-      width: "50px",
-      borderRadius: "50%",
-      marginRight: "5px"
-    };
     return (
       <Grid style={{ background: "#4c3c4c" }}>
         <Grid.Column>
@@ -54,7 +49,12 @@ class UserPanel extends Component {
             <Dropdown
               trigger={
                 <span>
-                  {/* <img src={photoURL} alt={displayName} style={imageStyle} /> */}
+                  <Image
+                    src={photoURL}
+                    alt={displayName}
+                    spaced="right"
+                    avatar
+                  />
                   {displayName}
                 </span>
               }
