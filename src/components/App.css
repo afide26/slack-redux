@@ -10,7 +10,9 @@ body {
   height: 100vh;
   background: #e5e0e0;
   box-sizing: border-box;
+  padding: 1em;
 }
+
 
 .app {
   padding: 1em;
