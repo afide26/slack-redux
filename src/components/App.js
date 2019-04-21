@@ -13,7 +13,7 @@ const App = () => {
     <Grid className="app" columns="equal" style={{ background: "#eee" }}>
       <ColorPanel />
       <SidePanel />
-      <Grid.Column style={{ marginLeft: "320" }}>
+      <Grid.Column style={{ marginLeft: "320px" }}>
         <Messages />
       </Grid.Column>
       <Grid.Column width={4}>
