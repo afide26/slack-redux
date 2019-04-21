@@ -9,13 +9,26 @@ html,
 body {
   height: 100vh;
   background: #e5e0e0;
-  box-sizing: border-box;
-  font-size: 16px;
-  padding: 1rem;
+  padding: 1em;
 }
 
 
 .app {
   padding: 1em;
   height: 100vh;
+}
+
+.messages {
+  height: 68vh;
+  overflow-y: scroll;
+  width: 100% !important;
+}
+
+.message__form {
+  position: fixed !important;
+  z-index: 200;
+  margin-left: 320px !important;
+  left: 1em;
+  bottom: 1em;
+  right: 1em;
 }
