@@ -62,7 +62,7 @@ class Login extends Component {
       <Grid textAlign="center" verticalAlign="middle" className="app">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="violet" textAlign="center">
-            <Icon name="code branch" color="orange" />
+            <Icon name="code branch" color="violet" />
             Login to SlackDevChat
           </Header>
           <Form size="large" onSubmit={this.handleSubmit}>
