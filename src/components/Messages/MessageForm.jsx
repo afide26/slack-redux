@@ -69,7 +69,9 @@ class MessageForm extends Component {
           placeholder="Write your message"
           onChange={this.handleChange}
           className={
-            errors.some(error => error.includes("message")) ? "error" : ""
+            errors.some(error => JSON.stringify(error).includes("message"))
+              ? "error"
+              : ""
           }
         />
         <Button.Group icon widths="2">
