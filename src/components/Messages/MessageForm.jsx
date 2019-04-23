@@ -57,7 +57,7 @@ class MessageForm extends Component {
     }
   };
   render() {
-    const { errors } = this.state;
+    const { errors, message, loading } = this.state;
     return (
       <Segment className="message__form">
         <Input
@@ -68,6 +68,7 @@ class MessageForm extends Component {
           labelPosition="left"
           placeholder="Write your message"
           onChange={this.handleChange}
+          value={message}
           className={
             errors.some(error => JSON.stringify(error).includes("message"))
               ? "error"
@@ -78,6 +79,7 @@ class MessageForm extends Component {
           <Button
             color="orange"
             content="Add Reply"
+            disabled={loading}
             labelPosition="left"
             icon="edit"
             onClick={this.sendMessage}
