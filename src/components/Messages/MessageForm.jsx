@@ -60,6 +60,10 @@ class MessageForm extends Component {
       });
     }
   };
+
+  uploadFile = (filename, metadata) => {
+    console.log(filename, metadata);
+  };
   render() {
     const { errors, message, loading, modal } = this.state;
     return (
@@ -96,7 +100,11 @@ class MessageForm extends Component {
             onClick={this.openModal}
           />
         </Button.Group>
-        <FileModal modal={modal} closeModal={this.closeModal} />
+        <FileModal
+          uploadFile={this.uploadFile}
+          modal={modal}
+          closeModal={this.closeModal}
+        />
       </Segment>
     );
   }
