@@ -30,7 +30,7 @@ class FileModal extends Component {
   isAuthorized = filename =>
     this.state.authorized.includes(mime.lookup(filename));
   render() {
-    const { modal, closeModal, uploadFile } = this.props;
+    const { modal, closeModal } = this.props;
     return (
       <Modal basic open={modal} onClose={closeModal}>
         <Modal.Header>Select an Image File</Modal.Header>
