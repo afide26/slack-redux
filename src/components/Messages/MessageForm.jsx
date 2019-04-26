@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Segment, Button, Input } from "semantic-ui-react";
 import uuidv4 from "uuid/v4";
 import FileModal from "./FileModal";
+import ProgressBar from "./ProgressBar";
 import firebase from "../../firebase";
 
 class MessageForm extends Component {
@@ -123,16 +124,18 @@ class MessageForm extends Component {
       .then(() => {
         this.setState({
           uploadState: "done"
-        }).catch(err => {
-          console.error(err);
-          this.setState({
-            errors: this.state.errors.concat(err)
-          });
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          errors: this.state.errors.concat(err)
         });
       });
   };
   render() {
-    const { errors, message, loading, modal } = this.state;
+    //prettier-ignore
+    const { errors, message, loading, modal,uploadState,percentUploaded } = this.state;
     return (
       <Segment className="message__form">
         <Input
@@ -161,6 +164,7 @@ class MessageForm extends Component {
           />
           <Button
             style={{ color: "white", backgroundColor: "#4f82ce" }}
+            disabled={uploadState === "uploading"}
             content="Upload Media"
             labelPosition="right"
             icon="cloud upload"
@@ -171,6 +175,10 @@ class MessageForm extends Component {
           uploadFile={this.uploadFile}
           modal={modal}
           closeModal={this.closeModal}
+        />
+        <ProgressBar
+          uploadState={uploadState}
+          percentUploaded={percentUploaded}
         />
       </Segment>
     );
