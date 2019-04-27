@@ -12,7 +12,10 @@ class Messages extends Component {
     user: this.props.currentUser,
     messages: [],
     messageLoading: true,
-    numUniqueUsers: ""
+    numUniqueUsers: "",
+    searchTerm: "",
+    searchLoading: false,
+    searchResults: []
   };
 
   componentDidMount() {
@@ -67,18 +70,49 @@ class Messages extends Component {
     ));
 
   displayChannelName = channel => (channel ? `#${channel.name}` : "");
+
+  handleSearchChange = event => {
+    this.setState(
+      {
+        searchTerm: event.target.value,
+        searchLoading: true
+      },
+      () => this.handleSearchMessages()
+    );
+  };
+
+  handleSearchMessages = () => {
+    const channelMessages = [...this.state.messages];
+    const regex = new RegExp(this.state.searchTerm, "gi");
+    const searchResults = channelMessages.reduce((acc, message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.name.match(regex)
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+    this.setState({ searchResults });
+    setTimeout(() => this.setState({ searchLoading: false }), 1000);
+  };
   render() {
-    const { messagesRef, channel, messages, user, numUniqueUsers } = this.state;
+    //prettier-ignore
+    const { searchLoading, messagesRef, channel, messages, user, numUniqueUsers,searchTerm,searchResults } = this.state;
     return (
       <React.Fragment>
         <MessagesHeader
           numUniqueUsers={numUniqueUsers}
           channelName={this.displayChannelName(channel)}
+          handleSearchChange={this.handleSearchChange}
+          searchLoading={searchLoading}
         />
 
         <Segment>
           <Comment.Group className="messages">
-            {this.displayMessages(messages)}
+            {searchTerm
+              ? this.displayMessages(searchResults)
+              : this.displayMessages(messages)}
           </Comment.Group>
         </Segment>
 
