@@ -52,3 +52,8 @@ body {
 .progress__bar {
   margin: 0.3rem 0 0 0 !important;
 }
+
+/* Channels.jsx */
+.menu {
+  padding-bottom: 2em;
+}
