@@ -13,21 +13,22 @@ const user_reducer = (state = initialUserState, action) => {
     case actionTypes.SET_USER:
       return {
         currentUser: action.payload.currentUser,
-        isLoading: false
+          isLoading: false
       };
     case actionTypes.CLEAR_USER:
       return {
         ...state,
         isLoading: false
       }
-    default:
-      return state;
+      default:
+        return state;
   }
 }
 
 // Channel Reducer
 const initialChannelState = {
-  currentChannel: null
+  currentChannel: null,
+  isPrivateChannel: false
 }
 const channel_reducer = (state = initialChannelState, action) => {
   switch (action.type) {
@@ -36,8 +37,13 @@ const channel_reducer = (state = initialChannelState, action) => {
         ...state,
         currentChannel: action.payload.currentChannel
       }
-    default:
-      return state;
+      case actionTypes.SET_PRIVATE_CHANNEL:
+        return {
+          ...state,
+          isPrivateChannel: action.payload.isPrivateChannel
+        }
+        default:
+          return state;
   }
 }
 
